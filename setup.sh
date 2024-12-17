@@ -3,9 +3,11 @@
 
 git config --global user.email "lauritswl@gmail.com"
 git config --global user.name "lauritswl"
-   
-python3 -m venv venv
-source venv/bin/activate
- python -m pip install --upgrade pip
-# pip install -r requirements.txt #doesn't work correctly in ucloud
-pip install -r /work/NLP/NLP_IMDb_Exam/requirements.txt
+
+
+# Uncode this before publishing final
+# python3 -m venv venv
+# source venv/bin/activate
+# python -m pip install --upgrade pip
+# pip install -r requirements.txt
+
