@@ -1,0 +1,67 @@
+---
+title: "Merge"
+author: "Laurits Lyngbaek"
+date: "2024-12-16"
+output: html_document
+---
+# Merge and clean data for NLP:
+The data is mined and merged in R, before used in python.
+The original data is per 17/12/2024 available at:
+https://ieee-dataport.org/open-access/imdb-movie-reviews-dataset
+
+# Load packages
+```{r}
+# Load the bulkread package
+pacman::p_load(bulkreadr, tidyverse)
+
+```
+
+# 
+```{r}
+# create a list of file paths - to the review folder
+csv_files <- list.files("2_reviews_per_movie_raw/", full.names = TRUE, pattern = "\\.csv$")
+
+# read the files in parallel with read_csv
+reviews <- readr::read_csv(csv_files, id = "file_name") %>% 
+  mutate(movie_title_year = str_extract(file_name, "(?<=reviews_per_movie_raw/).+(?=\\.csv)")) %>% #isolate title name and publication year from file string
+  separate(movie_title_year, into = c("movie_title", "year"), sep = " (?=\\d{4}$)", convert = TRUE) %>% # split the year and title, by selecting the last 4 digits
+  select(movie_title, year, rating, title, review)
+
+head(reviews)
+```
+```{r}
+summary(reviews)
+```
+
+
+
+
+```{r}
+# Set the folder path containing the CSV files  - to the review folder
+csv_files <- list.files("1_movies_per_genre/", full.names = TRUE, pattern = "\\.csv$")
+meta_data <- readr::read_csv(csv_files, id = "file_name") %>% 
+  select(name, rating) %>% 
+  rename(movie_title = name,
+         average_rating = rating) %>% 
+  distinct(movie_title, .keep_all = TRUE)
+
+head(meta_data)
+```
+
+
+```{r}
+summary(meta_data)
+```
+
+```{r}
+merged_data <- merge(reviews, meta_data, by = "movie_title", all.x = TRUE)
+write_csv(x = merged_data,file = "review_dataframe.csv")
+```
+
+
+
+
+
+
+
+
