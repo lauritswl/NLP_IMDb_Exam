@@ -19,7 +19,7 @@ pacman::p_load(bulkreadr, tidyverse)
 # 
 ```{r}
 # create a list of file paths - to the review folder
-csv_files <- list.files("2_reviews_per_movie_raw/", full.names = TRUE, pattern = "\\.csv$")
+csv_files <- list.files("../Data/2_reviews_per_movie_raw/", full.names = TRUE, pattern = "\\.csv$")
 
 # read the files in parallel with read_csv
 reviews <- readr::read_csv(csv_files, id = "file_name") %>% 
@@ -38,7 +38,7 @@ summary(reviews)
 
 ```{r}
 # Set the folder path containing the CSV files  - to the review folder
-csv_files <- list.files("1_movies_per_genre/", full.names = TRUE, pattern = "\\.csv$")
+csv_files <- list.files("../Data/1_movies_per_genre/", full.names = TRUE, pattern = "\\.csv$")
 meta_data <- readr::read_csv(csv_files, id = "file_name") %>% 
   select(name, rating) %>% 
   rename(movie_title = name,
