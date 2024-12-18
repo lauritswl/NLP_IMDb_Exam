@@ -54,8 +54,13 @@ summary(meta_data)
 ```
 
 ```{r}
+meta_data$movie_title <- gsub(":", "_", meta_data$movie_title) # Change semicolons, since titles are derived from file names.
+
 merged_data <- merge(reviews, meta_data, by = "movie_title", all.x = TRUE)
-write_csv(x = merged_data,file = "review_dataframe.csv")
+sum(is.na(merged_data$average_rating)) # Check if any NA's are present
+
+
+write_csv(x = merged_data,file = "../Data/review_dataframe.csv")
 ```
 
 
