@@ -12,3 +12,4 @@ tf_keras
 torch
 transformers[torch]
 transformers
+statsmodels
